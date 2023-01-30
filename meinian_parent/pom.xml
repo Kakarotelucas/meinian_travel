@@ -25,6 +25,7 @@
         <spring.version>5.0.5.RELEASE</spring.version>
         <!--分页插件-->
         <pagehelper.version>4.1.4</pagehelper.version>
+
         <servlet-api.version>2.5</servlet-api.version>
         <dubbo.version>2.6.0</dubbo.version>
         <zookeeper.version>3.4.7</zookeeper.version>
@@ -179,7 +180,7 @@
                 <artifactId>commons-fileupload</artifactId>
                 <version>${commons-fileupload.version}</version>
             </dependency>
-            <!--任务调度-->
+            <!--任务调度，定时清理-->
             <dependency>
                 <groupId>org.quartz-scheduler</groupId>
                 <artifactId>quartz</artifactId>

@@ -18,7 +18,6 @@
 
             <!--项目使用vue.js中的axios异步访问数据，传递json数据，响应json数据-->
             <!--不需要视图解析器，项目中的所有的请求都返回json数据结构-->
-
             <!--fastJson转换器-->
             <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
                 <property name="supportedMediaTypes" value="application/json"/>
@@ -40,13 +39,14 @@
     <!--指定服务注册中心地址-->
     <dubbo:registry address="zookeeper://127.0.0.1:2181"/>
     <!--批量扫描，因此新建对应的包-->
-    <dubbo:annotation package="com.atguigu.controller" />
+    <dubbo:annotation package="com.kakarote.controller" />
     <!--
         超时全局设置 10分钟，连不上服务器的话在10分钟内会一直尝试连接
         check=false 不检查服务提供方，开发阶段建议设置为false
         check=true 启动时检查服务提供方，如果服务提供方没有启动则报错
     -->
     <dubbo:consumer timeout="600000" check="false"/>
+
     <!--文件上传组件-->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <!-- 设定文件上传的最大值为100MB，100*1024*1024 -->

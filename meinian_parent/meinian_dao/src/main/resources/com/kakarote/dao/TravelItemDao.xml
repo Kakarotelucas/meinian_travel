@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--接口的全限定名-->
+<mapper namespace="com.kakarote.dao.TravelItemDao">
+    <!--新增自由行,parameterType在dao中已经配置了类型别名，不用再写全类名，写类名小驼峰即可-->
+    <insert id="add" parameterType="travelItem">
+        insert into
+        t_travelitem(code,name,sex,age,price,type,remark,attention)
+        values
+        (#{code},#{name},#{sex},#{age},#{price},#{type},#{remark},#{attention})
+    </insert>
+
+    <!--自由行分页插件
+    Page findPage(String queryString);
+    -->
+    <select id="findPage" parameterType="string" resultType="travelItem">
+        select * from t_travelitem
+        <!--搜索框项目编号code或者项目名称name模糊查询，value指的是搜索框输入值。
+            使用if获取简单参数必须使用value或者用@param（""）指定名字-->
+        <where>
+            <if test="value!=null and value.length>0">
+                code = #{value} or name like '%'#{value}'%'
+            </if>
+        </where>
+    </select>
+</mapper>
