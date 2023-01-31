@@ -10,7 +10,7 @@
         (#{code},#{name},#{sex},#{age},#{price},#{type},#{remark},#{attention})
     </insert>
 
-    <!--自由行分页插件
+    <!--自由行分页
     Page findPage(String queryString);
     -->
     <select id="findPage" parameterType="string" resultType="travelItem">
@@ -23,4 +23,68 @@
             </if>
         </where>
     </select>
+
+    <!--删除自由行
+    void delete(Integer id);
+    -->
+    <delete id="delete" parameterType="integer">
+        delete from t_travelitem where id = #{id}
+    </delete>
+
+    <!--编辑表单回显数据
+        TravelItem findById(Integer id);
+    -->
+    <select id="findById" parameterType="integer" resultType="travelItem">
+        select * from t_travelitem where id = #{id}
+    </select>
+
+    <!--编辑自由行表单内容
+    update t_travelitem set code=#{code},name=#{name} where id=#{id}
+    -->
+    <update id="edit" parameterType="travelItem">
+        update t_travelitem
+        <set>
+            <if test="code!=null and code.length>0">
+                code=#{code},
+            </if>
+            <if test="name!=null and name.length>0">
+                name=#{name},
+            </if>
+            <if test="sex!=null and sex.length>0">
+                sex=#{sex},
+            </if>
+            <if test="age!=null and age.length>0">
+                age=#{age},
+            </if>
+            <if test="price!=null">
+                price=#{price},
+            </if>
+            <if test="type!=null and type.length>0">
+                type=#{type},
+            </if>
+            <if test="remark!=null and remark.length>0">
+                remark=#{remark},
+            </if>
+            <if test="attention!=null and attention.length>0">
+                attention=#{attention},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+
+
+
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+

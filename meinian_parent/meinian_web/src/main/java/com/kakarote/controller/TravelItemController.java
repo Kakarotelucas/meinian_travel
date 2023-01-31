@@ -45,12 +45,57 @@ public class TravelItemController {
      */
     @RequestMapping("/findPage")
     public PageResult findPage(@RequestBody QueryPageBean queryPageBean){
-        PageResult pageResult= travelItemService.findPage(
+        PageResult pageResult = travelItemService.findPage(
                 queryPageBean.getCurrentPage(),
                 queryPageBean.getPageSize(),
                 queryPageBean.getQueryString());
-
         return pageResult;
     }
+
+
+    /**
+     * //删除自由行
+     * @param id
+     * @return
+     */
+    @RequestMapping("/delete")
+    public Result delete(Integer id){ //可以使用 RequestParam("id")接收
+        try {
+            travelItemService.delete(id);
+            return new Result(true, MessageConstant.DELETE_TRAVELITEM_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, MessageConstant.DELETE_TRAVELITEM_FAIL);
+        }
+    }
+
+    /**
+     * 编辑表单回显数据
+     * @param id
+     * @return 注意travelItem别漏
+     */
+    @RequestMapping("/findById")
+    public Result findById(Integer id){
+
+        try {
+            TravelItem travelItem = travelItemService.findById(id);
+            return new Result(true, MessageConstant.QUERY_TRAVELITEM_SUCCESS,travelItem);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(true, MessageConstant.QUERY_TRAVELITEM_FAIL);
+        }
+    }
+
+    /**
+     * 编辑自由行表单内容
+     * @param travelItem
+     * @return
+     */
+    @RequestMapping("/edit")
+    public Result edit(@RequestBody TravelItem travelItem){
+        travelItemService.edit(travelItem);
+        return new Result(true,MessageConstant.EDIT_TRAVELITEM_SUCCESS);
+    }
+
 
 }

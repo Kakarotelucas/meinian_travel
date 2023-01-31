@@ -232,8 +232,32 @@
                 this.findPage()
             },
             methods: {
-                //编辑
+                //编辑自由行内容
                 handleEdit() {
+                    //先进行表单校验
+                    this.$refs['dataEditForm'].validate((valid)=>{
+                        if(valid){
+                            //表单校验通过，发送请求
+                            axios.post("/travelItem/edit.do",this.formData).then((response)=> {
+                                //隐藏编辑窗口
+                                this.dialogFormVisible4Edit = false;
+                                if(response.data.flag){
+                                    //编辑成功，弹出成功提示信息
+                                    this.$message({message: response.data.message,type: 'success'});
+                                }else{
+                                    //编辑失败，弹出错误提示信息
+                                    this.$message.error(response.data.message);
+                                }
+                            }).finally(()=> {
+                                //重新发送请求查询分页数据
+                                this.findPage();
+                            });
+                        }else{
+                            //表单校验失败
+                            this.$message.error("表单数据校验失败");
+                            return false;
+                        }
+                    });
                 },
                 //添加
                 handleAdd () {
@@ -253,7 +277,7 @@
                             axios.post("/travelItem/add.do", this.formData).then((response) => {
                                 //data封装成返回结果result类，result等价于{flag：true,message:'',data:''}
                                 if (response.data.flag) {
-                                    //flag为true，操作成功
+                                    //flag为true，操作成功 this.$message.success(response.data.message)
                                     this.$message({
                                         message:response.data.message,
                                         type:'success'
@@ -305,7 +329,7 @@
                 resetForm() {
                     this.formData = {}
                 },
-                // 弹出添加窗口
+                // 弹出添加自由行窗口
                 handleCreate() {
                     //先重置表单
                     this.resetForm()
@@ -314,16 +338,32 @@
                 },
                 // 弹出编辑窗口
                 handleUpdate(row) {
+                    //先发送请求查出数据，再弹出编辑窗口
+                    axios.get("/travelItem/findById.do?id="+row.id).then((response)=>{
+                        //查到了数据，弹出编辑窗口
+                        if (response.data.flag) {
+                            this.dialogFormVisible4Edit = true
+                            //把后台数据回显到表单上
+                            this.formData = response.data.data
+
+                        }else{
+                            this.$message.error("获取数据失败，请刷新页面")
+                        }
+                    })
                 },
-                //切换页码
+                //切换自由行页码
                 handleCurrentChange(currentPage) {
                     // currentPage为切换后的页码
                     this.pagination.currentPage = currentPage
                     this.findPage()
 
                 },
-                // 删除
+
+                // 删除,row表示上述code,name等一整行数据
                 handleDelete(row) {
+                    /*
+                    $confirm可参考element官网
+                    */
 					this.$confirm('此操作将永久删除该自由行, 是否继续?', '提示', {
 						confirmButtonText: '确定',
 						cancelButtonText: '取消',
@@ -331,16 +371,22 @@
 						center: true
 					}).then(() => {
 						// 发送ajax请求，执行删除
-                        this.$message({
-							type: 'success',
-							message: '删除成功!'
-						});
-					}).catch(() => {
-						this.$message({
-							type: 'info',
-							message: '已取消删除'
-						});
-					});
+                        axios.get("/travelItem/delete.do?id="+row.id).then((response)=>{
+                            //response封装了 Result对象，Result对象封装了flag、message、data
+                            console.log(response)
+                            //data就是Result
+                            if(response.data.flag){
+                                //message就是Result中封装的常量
+                                this.$message.success(response.data.message)
+                                //删除成功刷新分页
+                                this.findPage();
+                            }else{
+                                this.$message.error(response.data.message)
+                            }
+                        })
+					}).catch(() => {// 取消操作
+                        this.$message.info("取消了操作")
+                    });
                 }
             }
         })

@@ -5,6 +5,7 @@ import com.github.pagehelper.PageHelper;
 import com.kakarote.dao.TravelItemDao;
 import com.kakarote.results.PageResult;
 import com.kakarote.pojo.TravelItem;
+import com.kakarote.results.Result;
 import com.kakarote.service.TravelItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,4 +49,37 @@ public class TravelItemServiceImpl implements TravelItemService {
         return new PageResult(page.getTotal(),page.getResult());*/
 
     }
+
+    /**
+     * //删除自由行
+     * @param id
+     */
+    @Override
+    public void delete(Integer id) {
+        travelItemDao.delete(id);
+    }
+
+
+
+    /**
+     * 编辑自由行回显数据
+     * @param id
+     * @return
+     */
+    @Override
+    public TravelItem findById(Integer id) {
+        TravelItem travelItem = travelItemDao.findById(id);
+        return travelItem;
+    }
+
+    /**
+     *编辑自由行表单内容
+     * @param travelItem
+     */
+    @Override
+    public void edit(TravelItem travelItem) {
+        travelItemDao.edit(travelItem);
+    }
+
+
 }

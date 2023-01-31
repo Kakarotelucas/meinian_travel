@@ -3,6 +3,7 @@ package com.kakarote.service;
 
 import com.kakarote.results.PageResult;
 import com.kakarote.pojo.TravelItem;
+import com.kakarote.results.Result;
 
 /**
  * @Date: 2023/1/29 14:51
@@ -17,6 +18,15 @@ public interface TravelItemService {
 
     //分页查询
     PageResult findPage(Integer currentPage, Integer pageSize, String queryString);
+
+    //删除自由行
+    void delete(Integer id);
+
+    //编辑自由行回显数据
+    TravelItem findById(Integer id);
+
+    //编辑更改自由行表单内容
+    void edit(TravelItem travelItem);
 }
 
 
