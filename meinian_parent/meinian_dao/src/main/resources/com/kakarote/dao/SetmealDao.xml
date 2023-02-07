@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--接口的全限定名-->
+<mapper namespace="com.kakarote.dao.SetmealDao">
+
+    <!--
+    新增套餐
+    public void add(Setmeal setmeal)
+    public void setSetmealAndTravelGroup(Map<String, Integer> map)
+    -->
+    <insert id="add" parameterType="setmeal" keyProperty="id" useGeneratedKeys="true">
+        insert into t_setmeal(name,code,helpCode,sex,age,price,remark,attention,img) values (#{name},#{code},#{helpCode},#{sex},#{age},#{price},#{remark},#{attention},#{img})
+    </insert>
+
+    <!--绑定套餐和跟团游多对多关系-->
+    <insert id="setSetmealAndTravelGroup" parameterType="map">
+        insert into t_setmeal_travelgroup(setmeal_id,travelgroup_id) values (#{setmeal_id},#{travelgroup_id})
+    </insert>
+
+    <!--
+    分页查询
+    Page<Setmeal> findPage(String queryString);
+    -->
+    <select id="findPage" parameterType="string" resultType="setmeal">
+        select * from t_setmeal
+        <where>
+            <if test="value!=null and value.length>0">
+                code=#{value} or name like concat('%',#{value},'%') or helpCode=#{value}
+            </if>
+        </where>
+    </select>
+
+
+</mapper>

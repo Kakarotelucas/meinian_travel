@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * @Date: 2023/1/29 14:45
  * @Auther: Kakarotelu
@@ -63,7 +65,11 @@ public class TravelItemController {
         try {
             travelItemService.delete(id);
             return new Result(true, MessageConstant.DELETE_TRAVELITEM_SUCCESS);
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            //取异常消息
+            return new Result(false, e.getMessage());
+        }catch (Exception e) {
             e.printStackTrace();
             return new Result(false, MessageConstant.DELETE_TRAVELITEM_FAIL);
         }
@@ -95,6 +101,16 @@ public class TravelItemController {
     public Result edit(@RequestBody TravelItem travelItem){
         travelItemService.edit(travelItem);
         return new Result(true,MessageConstant.EDIT_TRAVELITEM_SUCCESS);
+    }
+
+    /**
+     * 新增跟团游中回显自由行信息
+     * @return
+     */
+    @RequestMapping("/findAll")
+    public Result findAll(){
+        List<TravelItem> lists =  travelItemService.findAll();
+        return new Result(true, MessageConstant.QUERY_TRAVELGROUP_SUCCESS,lists);
     }
 
 

@@ -3,6 +3,8 @@ package com.kakarote.dao;
 import com.github.pagehelper.Page;
 import com.kakarote.pojo.TravelItem;
 
+import java.util.List;
+
 /**
  * @Date: 2023/1/29 14:43
  * @Auther: Kakarotelu
@@ -25,5 +27,11 @@ public interface TravelItemDao {
 
     //编辑自由行表单内容
     void edit(TravelItem travelItem);
+
+    //报团游新增出查询自由行列表
+    List<TravelItem> findAll();
+
+    //删除自由行进行关联校验
+    Long findCountByTravelitemId(Integer id);
 }
 

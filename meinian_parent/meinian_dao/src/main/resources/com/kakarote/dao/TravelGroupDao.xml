@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--接口的全限定名-->
+<mapper namespace="com.kakarote.dao.TravelGroupDao">
+
+    <!--
+    //新增跟团游
+    void add(TravelGroup travelGroup);
+    void setTravelGroupAndTravelItem(Map<String, Integer> map);
+    用主键生成器回填id，不然无法得到id：keyProperty="id" useGeneratedKeys="true"
+    -->
+    <insert id="add" parameterType="travelGroup" keyProperty="id" useGeneratedKeys="true">
+        insert into t_travelgroup(code, name, helpCode, sex, remark, attention)
+        values
+        (#{code}, #{name}, #{helpCode}, #{sex}, #{remark}, attention =#{attention})
+    </insert>
+
+    <insert id="setTravelGroupAndTravelItem" parameterType="map">
+        insert into t_travelgroup_travelitem(travelgroup_id,travelitem_id) values (#{travelGroup},#{travelItem})
+    </insert>
+
+
+    <!--分页查询
+    Page<TravelGroup> findPage(@Param("queryString") String queryString);
+    concat: 在mysql的语法中，表示字符串的连接符，可以代替 %#{value}%
+    -->
+    <select id="findPage" parameterType="string" resultType="travelGroup">
+        select * from t_travelgroup
+        <where>
+            <if test="queryString!=null and queryString.length>0">
+                code =#{queryString} or name like concat("%",#{queryString},"%") or                                helpCode=#{queryString}
+            </if>
+        </where>
+    </select>
+
+
+
+
+    <!--新增跟团游中回显自由行信息
+    List<TravelGroup> findAll();
+    -->
+    <select id="findAll" resultType="travelGroup">
+        select * from t_travelgroup;
+    </select>
+</mapper>

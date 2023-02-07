@@ -10,6 +10,8 @@ import com.kakarote.service.TravelItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * @Date: 2023/1/29 14:59
  * @Auther: Kakarotelu
@@ -56,6 +58,12 @@ public class TravelItemServiceImpl implements TravelItemService {
      */
     @Override
     public void delete(Integer id) {
+        //查询自由行关联表表中是否关联其他数据，如果存在，就抛异常，不进行删除
+        Long conunt = travelItemDao.findCountByTravelitemId(id);
+        if (conunt > 0){
+            //有关联数据
+            throw new RuntimeException("删除自由行失败！存在关联数据不允许删除！");
+        }
         travelItemDao.delete(id);
     }
 
@@ -81,5 +89,12 @@ public class TravelItemServiceImpl implements TravelItemService {
         travelItemDao.edit(travelItem);
     }
 
-
+    /**
+     * //新增跟团游中回显自由行信息
+     * @return
+     */
+    @Override
+    public List<TravelItem> findAll() {
+        return travelItemDao.findAll();
+    }
 }

@@ -7,11 +7,11 @@
     <!-- 加载spring容器，没有*表示当前项目的根路径，有*表示依赖所有项目的根路径-->
     <context-param>
         <param-name>contextConfigLocation</param-name>
-
         <!--classpath表示从当前类路径加载配置文件
         classpath*表示从当前类路径加载配置文件，以及从jar包中加载配置文件从而可以加载dao中的xml配置文件-->
         <param-value>classpath*:applicationContext*.xml</param-value>
     </context-param>
+
     <!--配置监听器-->
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>

@@ -3,7 +3,8 @@ package com.kakarote.service;
 
 import com.kakarote.results.PageResult;
 import com.kakarote.pojo.TravelItem;
-import com.kakarote.results.Result;
+
+import java.util.List;
 
 /**
  * @Date: 2023/1/29 14:51
@@ -27,6 +28,8 @@ public interface TravelItemService {
 
     //编辑更改自由行表单内容
     void edit(TravelItem travelItem);
-}
 
+    //新增跟团游中回显自由行信息
+    List<TravelItem> findAll();
+}
 

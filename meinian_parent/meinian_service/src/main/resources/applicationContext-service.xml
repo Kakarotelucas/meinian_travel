@@ -21,4 +21,5 @@
     <dubbo:registry address="zookeeper://127.0.0.1:2181"/>
     <!--批量扫描，发布服务,调用接口，在interface模块中创建相应的包 meinian_service中放对应的实现类-->
     <dubbo:annotation package="com.kakarote.service"/>
+
 </beans>

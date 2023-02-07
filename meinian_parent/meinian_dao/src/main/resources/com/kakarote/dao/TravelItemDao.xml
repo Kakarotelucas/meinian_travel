@@ -19,7 +19,7 @@
             使用if获取简单参数必须使用value或者用@param（""）指定名字-->
         <where>
             <if test="value!=null and value.length>0">
-                code = #{value} or name like '%'#{value}'%'
+                code = #{value} or name like "%"#{value}"%"
             </if>
         </where>
     </select>
@@ -72,7 +72,19 @@
         where id = #{id}
     </update>
 
+    <!--新增跟团游中回显自由行信息
+    List<TravelItem> findAll();
+    -->
+    <select id="findAll" resultType="travelItem">
+        select * from t_travelitem
+    </select>
 
+    <!--删除自由行进行关联交验-->
+    <select id="findCountByTravelitemId" parameterType="integer" resultType="long">
+        select count(*) from t_travelgroup_travelitem
+        where travelitem_id = #{id}
+
+    </select>
 
 
 </mapper>
