@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--接口的全限定名-->
+<mapper namespace="com.kakarote.dao.OrderSettingDao">
+
+    <!--
+    保存数据到表格中
+    void add(OrderSetting orderSetting);
+    -->
+    <insert id="add" parameterType="orderSetting">
+        insert into t_ordersetting (orderDate, number, reservations) values (#{orderDate},#{number},#{reservations});
+    </insert>
+
+    <!--
+    查询当前预约日期预约数量是否不止一个
+    int findCountByOrderDate(Date orderDate);
+    -->
+    <select id="findCountByOrderDate" parameterType="date" resultType="int">
+        select count(*) from t_ordersetting where orderDate = #{orderDate}
+    </select>
+
+    <!--
+    设置过预约日期，更新number数量()
+    void editNumberByOrderDate(OrderSetting orderSetting);
+    -->
+    <update id="editNumberByOrderDate" parameterType="orderSetting">
+        update t_ordersetting set number = #{number} where orderDate = #{orderDate}
+    </update>
+
+
+    <!--
+    根据日期查询预约设置数据(获取指定日期所在月份的预约设置数据)
+    List<OrderSetting> getOrderSettingByMonth(Map<String, Object> map);
+    也可以使用sql语句：SELECT * FROM t_ordersetting WHERE orderDate LIKE '2023-01-%'
+    -->
+    <select id="getOrderSettingByMonth" parameterType="map" resultType="orderSetting">
+        select * from t_ordersetting where orderDate between #{dateBegin} and #{dateEnd}
+    </select>
+
+</mapper>

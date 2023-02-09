@@ -13,6 +13,7 @@ public class MessageConstant {
     public static final String QUERY_TRAVELITEM_SUCCESS = "查询自由行成功";
     public static final String QUERY_TRAVELITEM_FAIL = "查询自由行失败";
     public static final String UPLOAD_SUCCESS = "上传成功";
+    public static final String UPLOAD_FAIL = "上传失败";
     public static final String ADD_TRAVELGROUP_FAIL = "新增报团游失败";
     public static final String ADD_TRAVELGROUP_SUCCESS = "新增报团游成功";
     public static final String DELETE_TRAVELGROUP_FAIL = "删除报团游失败";
