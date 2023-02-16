@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import redis.clients.jedis.JedisPool;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -53,8 +54,6 @@ public class SetmealServiceImpl implements SetmealService {
         jedisPool.getResource().sadd(RedisConstant.SETMEAL_PIC_DB_RESOURCES,pic);
     }
 
-
-
     //绑定套餐和跟团游的多对多关系方法
     private void setSetmealAndTravelGroup(Integer setmealId, Integer[] travelgroupId) {
         for (Integer checkgroupId  : travelgroupId) {
@@ -78,5 +77,34 @@ public class SetmealServiceImpl implements SetmealService {
         PageHelper.startPage(currentPage,pageSize);
         Page<Setmeal> page = setmealDao.findPage(queryString);
         return new PageResult(page.getTotal(),page.getResult());
+    }
+
+    /**
+     * 移动端查询所有套餐
+     * @return
+     */
+    @Override
+    public List<Setmeal> findAll() {
+        return setmealDao.findAll();
+    }
+
+    /**
+     * 根据id查询套餐信息(还要显示跟团游、自由行)
+     * @param id
+     * @return
+     */
+    @Override
+    public Setmeal findById(int id) {
+        return setmealDao.findById(id);
+    }
+
+    /**
+     * 只查询单个套餐对象
+     * @param id
+     * @return
+     */
+    @Override
+    public Setmeal getSetmealById(int id) {
+        return setmealDao.getSetmealById(id);
     }
 }

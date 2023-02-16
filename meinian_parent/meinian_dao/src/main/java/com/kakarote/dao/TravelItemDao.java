@@ -33,5 +33,8 @@ public interface TravelItemDao {
 
     //删除自由行进行关联校验
     Long findCountByTravelitemId(Integer id);
+
+    //帮助跟团游查询关联数据的方法。id是跟团游传来的id
+    List<TravelItem> findTravelItemListById(Integer id);
 }
 

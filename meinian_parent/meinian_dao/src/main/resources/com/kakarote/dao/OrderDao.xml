@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--接口的全限定名-->
+<mapper namespace="com.kakarote.dao.OrderDao">
+
+    <!--
+    根据t_order表中查询会员id，下单时间，所订套餐id是否重复来判断是否重复预约
+    List<Order> findOrderByCondition(Order order);
+    封装成动态sql,注意<if test="memberId != null">
+                        and member_id = #{memberId}
+                    </if>等表列名与成员变量不同的情况
+    -->
+    <!--组织预约的查询条件，查询预约信息，
+      因为目前是三个预约条件查询，那么以后可能有4个，5个，甚至更多的条件查询，所以使用动态sql，全部查询
+   -->
+    <select id="findOrderByCondition" parameterType="order" resultType="order">
+        SELECT * FROM t_order
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="memberId != null">
+                and member_id = #{memberId}
+            </if>
+            <if test="orderDate != null">
+                and orderDate = #{orderDate}
+            </if>
+            <if test="orderType != null">
+                and orderType = #{orderType}
+            </if>
+            <if test="orderStatus != null">
+                and orderStatus = #{orderStatus}
+            </if>
+            <if test="setmealId != null">
+                and setmeal_id = #{setmealId}
+            </if>
+        </where>
+    </select>
+
+
+
+    <!--
+    //新增会员
+    void add(Order order);
+    -->
+    <insert id="add" parameterType="order" keyProperty="id" useGeneratedKeys="true">
+        insert into t_order(member_id, orderDate, orderType, orderStatus, setmeal_Id)
+        values(#{memberId}, #{orderDate}, #{orderType}, #{orderStatus}, #{setmealId})
+    </insert>
+
+    <!--
+    //根据订单id查询预约信息，包括旅游人信息、套餐信息
+    Map findById4Detail(Integer id);
+    注意别名与前端保持一致
+     会员姓名：{{orderInfo.member}}
+     旅游套餐：{{orderInfo.setmeal}}
+     旅游日期：{{orderInfo.orderDate}}
+     预约类型：{{orderInfo.orderType}}
+    -->
+    <select id="findById4Detail" resultType="map">
+        SELECT m.name member,s.name setmeal,o.orderDate orderDate,o.orderType orderType FROM t_setmeal s,t_order o,t_member m
+        WHERE o.member_id = m.id AND o.setmeal_id = s.id AND o.id = #{id}
+    </select>
+</mapper>

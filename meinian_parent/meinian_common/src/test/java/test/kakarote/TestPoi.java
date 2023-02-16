@@ -20,7 +20,7 @@ public class TestPoi {
     @Test
     public void readExcel() throws IOException {
         //1、创建工作簿
-        XSSFWorkbook workbook = new XSSFWorkbook("D:\\kakarote.xlsx");
+        XSSFWorkbook workbook = new XSSFWorkbook("D:\\com.kakarote.xlsx");
         //2、获取工作表，既可以根据工作表的顺序获取，也可以根据工作表的名称获取
         XSSFSheet sheet = workbook.getSheetAt(0);
         //3、遍历工作表获得行对象
@@ -40,7 +40,7 @@ public class TestPoi {
     @Test
     public void exportExcel_lastRow() throws IOException {
         //创建工作簿
-        XSSFWorkbook workbook = new XSSFWorkbook("D:\\kakarote.xlsx");
+        XSSFWorkbook workbook = new XSSFWorkbook("D:\\com.kakarote.xlsx");
         //获取工作表，既可以根据工作表的顺序获取，也可以根据工作表的名称获取
         XSSFSheet sheet = workbook.getSheetAt(0);
         //获取当前工作表最后一行的行号，行号从0开始
@@ -65,7 +65,7 @@ public class TestPoi {
         //在内存中创建一个Excel文件
         XSSFWorkbook workbook = new XSSFWorkbook();
         //创建工作表，指定工作表名称
-        XSSFSheet sheet = workbook.createSheet("kakarote");
+        XSSFSheet sheet = workbook.createSheet("com.kakarote");
 
         //创建行，0表示第一行
         XSSFRow row = sheet.createRow(0);
@@ -85,7 +85,7 @@ public class TestPoi {
         row2.createCell(2).setCellValue("20");
 
         //通过输出流将workbook对象下载到磁盘
-        FileOutputStream out = new FileOutputStream("D:\\kakarote-import.xlsx");
+        FileOutputStream out = new FileOutputStream("D:\\com.kakarote-import.xlsx");
         workbook.write(out);
         out.flush();//刷新
         out.close();//关闭

@@ -1,7 +1,6 @@
 package com.kakarote.dao;
 
 import com.github.pagehelper.Page;
-import com.kakarote.pojo.Setmeal;
 import com.kakarote.pojo.TravelGroup;
 import org.apache.ibatis.annotations.Param;
 
@@ -25,5 +24,8 @@ public interface TravelGroupDao {
 
     //新增套餐中的回显所有跟团游
     List<TravelGroup> findAll();
+
+    //帮助套餐查询关联数据的方法。id是套餐传来的id
+    List<TravelGroup> findTravelGroupListById(Integer id);
 }
 

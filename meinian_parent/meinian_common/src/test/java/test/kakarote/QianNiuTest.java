@@ -33,7 +33,7 @@ public class QianNiuTest {
         String accessKey = "P3qjwKkJYIE_k602Vuor0CP8UEPjU-wrK4yqkLil";
         String secretKey = "_GEXLQM7UufsIl4XaMA9CdZlN3SbJJsm0toM7LDk";
         //空间名
-        String bucket = "kakarote";
+        String bucket = "com.kakarote";
         //如果是Windows情况下，格式是 D:\\qiniu\\quartz.png，可支持中文
         String localFilePath = "D:/Desktop/picture/lyf.jpg";
         //默认不指定key的情况下，以文件内容的hash值作为文件名
@@ -67,7 +67,7 @@ public class QianNiuTest {
         String accessKey = "P3qjwKkJYIE_k602Vuor0CP8UEPjU-wrK4yqkLil";
         String secretKey = "_GEXLQM7UufsIl4XaMA9CdZlN3SbJJsm0toM7LDk";
         //空间名
-        String bucket = "kakarote";
+        String bucket = "com.kakarote";
         String key = "Fu_sQTB6T2mQ3Ga2fZclfBzwY_cJ";//文件哈希值名称
         Auth auth = Auth.create(accessKey, secretKey);
         BucketManager bucketManager = new BucketManager(auth, cfg);

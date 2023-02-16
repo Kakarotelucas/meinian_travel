@@ -1,11 +1,5 @@
 package com.kakarote.util;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -14,9 +8,13 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.web.multipart.MultipartFile;
 
-/**
- * POI工具类
- */
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+
 public class POIUtils {
     private final static String xls = "xls";
     private final static String xlsx = "xlsx";
@@ -27,14 +25,14 @@ public class POIUtils {
      * @throws IOException
      */
     public static List<String[]> readExcel(MultipartFile file) throws IOException {
-        //检查文件
+        //检查文件是否是Excel文件
         checkFile(file);
         //获得Workbook工作薄对象
         Workbook workbook = getWorkBook(file);
         //创建返回对象，把每行中的值作为一个数组，所有行作为一个集合返回
-        List<String[]> list = new ArrayList<>();
+        List<String[]> list = new ArrayList<String[]>();
         if(workbook != null){
-            for(int sheetNum = 0;sheetNum < workbook.getNumberOfSheets();sheetNum ++){
+            for(int sheetNum = 0;sheetNum < workbook.getNumberOfSheets();sheetNum++){
                 //获得当前sheet工作表
                 Sheet sheet = workbook.getSheetAt(sheetNum);
                 if(sheet == null){
@@ -45,7 +43,7 @@ public class POIUtils {
                 //获得当前sheet的结束行
                 int lastRowNum = sheet.getLastRowNum();
                 //循环除了第一行的所有行
-                for(int rowNum = firstRowNum + 1;rowNum <= lastRowNum;rowNum ++){
+                for(int rowNum = firstRowNum+1;rowNum <= lastRowNum;rowNum++){
                     //获得当前行
                     Row row = sheet.getRow(rowNum);
                     if(row == null){

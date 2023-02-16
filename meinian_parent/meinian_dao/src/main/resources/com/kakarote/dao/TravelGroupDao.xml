@@ -34,12 +34,37 @@
     </select>
 
 
-
-
     <!--新增跟团游中回显自由行信息
     List<TravelGroup> findAll();
     -->
     <select id="findAll" resultType="travelGroup">
         select * from t_travelgroup;
+    </select>
+
+    <!--
+    帮助套餐查询关联数据的方法。id是套餐传来的id
+    List<TravelGroup> findTravelGroupListById(Integer id);
+    -->
+    <resultMap id="travelGroupResultMap" type="travelGroup">
+        <id property="id" column="id"></id>
+        <result property="id" column="id"></result>
+        <result property="code" column="code"></result>
+        <result property="name" column="name"></result>
+        <result property="helpCode" column="helpCode"></result>
+        <result property="sex" column="sex"></result>
+        <result property="remark" column="remark"></result>
+        <result property="attention" column="attention"></result>
+        <!--查询private List<TravelItem> travelItems-->
+        <collection property="travelItems" column="id" select="com.kakarote.dao.TravelItemDao.findTravelItemListById"></collection>
+
+    </resultMap>
+
+    <!--将两张表内连接得到套餐id为3时对应的自由行信息,或者采用子查询
+    SELECT t_travelgroup.* FROM t_setmeal_travelgroup,t_travelgroup
+    WHERE t_setmeal_travelgroup.travelgroup_id = t_travelgroup.id
+    AND t_setmeal_travelgroup.setmeal_id= 3;-->
+    <select id="findTravelGroupListById" parameterType="int" resultMap="travelGroupResultMap">
+        SELECT t_travelgroup.* FROM t_travelgroup
+        WHERE id in (SELECT travelgroup_id FROM t_setmeal_travelgroup where setmeal_id = #{id});
     </select>
 </mapper>

@@ -19,7 +19,7 @@ import java.util.Map;
 /**
  * @Date: 2023/2/7 21:11
  * @Auther: Kakarotelu
- * @Description: 上传文件, 把编写好的Excel上传
+ * @Description:
  */
 @RestController
 @RequestMapping("/orderSetting")
@@ -28,8 +28,7 @@ public class OrderSettingController {
     private OrderSettingService orderSettingService;
 
     /**
-     * 上传模板文件
-     *
+     * 上传模板文件，把编写好的Excel上传
      * @param excelFile
      * @return
      */

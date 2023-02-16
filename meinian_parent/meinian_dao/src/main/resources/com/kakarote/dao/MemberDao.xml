@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--接口的全限定名-->
+<mapper namespace="com.kakarote.dao.MemberDao">
+    <!--
+    //根据用户输入的手机号查询Member对应表中是否存在
+    Member getMemberByTelephone(String telephone);
+    -->
+    <select id="getMemberByTelephone" resultType="member">
+        select * from t_member where phoneNumber = #{telephone}
+    </select>
+
+    <!--
+    新增会员，需要进行主键回填
+    void add(Member member);
+    -->
+    <insert id="add" parameterType="member" keyProperty="id" useGeneratedKeys="true">
+        insert into t_member(fileNumber, name, sex, idCard, phoneNumber, regTime, password, email, birthday, remark)
+        values (#{fileNumber}, #{name}, #{sex}, #{idCard}, #{phoneNumber}, #{regTime}, #{password}, #{email}, #{birthday}, #{remark})
+    </insert>
+</mapper>

@@ -1,11 +1,9 @@
 package com.kakarote.service;
 
-import com.alibaba.dubbo.config.annotation.Service;
 import com.kakarote.pojo.Setmeal;
 import com.kakarote.results.PageResult;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
 
-import java.util.Map;
 
 /**
  * @Date: 2023/2/2 20:23
@@ -19,4 +17,14 @@ public interface SetmealService {
 
     //分页查询
     PageResult findPage(Integer currentPage, Integer pageSize, String queryString);
+
+    //移动端查询所有套餐
+    List<Setmeal> findAll();
+
+    //根据id查询套餐信息(还要显示跟团游、自由行)
+    Setmeal findById(int id);
+
+    //只查询单个套餐对象
+    Setmeal getSetmealById(int id);
 }
+

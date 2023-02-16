@@ -3,6 +3,7 @@ package com.kakarote.dao;
 import com.github.pagehelper.Page;
 import com.kakarote.pojo.Setmeal;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,4 +26,13 @@ public interface SetmealDao {
      * @return
      */
     Page<Setmeal> findPage(String queryString);
+
+    //移动端查询所有套餐
+    List<Setmeal> findAll();
+
+    //根据id查询套餐信息(还要显示跟团游、自由行)
+    Setmeal findById(int id);
+
+    //只查询单个套餐对象
+    Setmeal getSetmealById(int id);
 }

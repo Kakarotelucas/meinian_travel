@@ -27,7 +27,6 @@
         update t_ordersetting set number = #{number} where orderDate = #{orderDate}
     </update>
 
-
     <!--
     根据日期查询预约设置数据(获取指定日期所在月份的预约设置数据)
     List<OrderSetting> getOrderSettingByMonth(Map<String, Object> map);
@@ -36,5 +35,21 @@
     <select id="getOrderSettingByMonth" parameterType="map" resultType="orderSetting">
         select * from t_ordersetting where orderDate between #{dateBegin} and #{dateEnd}
     </select>
+
+    <!--
+    通过日期查询，判断预约设置是否存在
+    OrderSetting getOrderSettingByOrderDate(Date date);
+    -->
+    <select id="getOrderSettingByOrderDate" parameterType="date" resultType="orderSetting">
+        select * from t_ordersetting where orderDate = #{orderDate}
+    </select>
+
+    <!--
+    更新orderSetting预约设置表中预约人数的值
+    void editReservationsByOrderDate(OrderSetting orderSetting);
+    -->
+    <update id="editReservationsByOrderDate" parameterType="order">
+        update t_ordersetting set reservations = #{reservations} where orderDate = #{orderDate}
+    </update>
 
 </mapper>

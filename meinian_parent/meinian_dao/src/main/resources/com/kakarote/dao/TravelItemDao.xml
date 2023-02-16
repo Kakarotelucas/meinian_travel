@@ -83,8 +83,18 @@
     <select id="findCountByTravelitemId" parameterType="integer" resultType="long">
         select count(*) from t_travelgroup_travelitem
         where travelitem_id = #{id}
-
     </select>
+
+    <!--
+    帮助跟团游查询关联数据的方法。id是跟团游传来的id
+    List<TravelItem> findTravelItemListById(Integer id);
+    -->
+    <!--根据跟团游id查询自由行信息-->
+    <select id="findTravelItemListById" resultType="travelItem" parameterType="int">
+        SELECT t_travelitem.* FROM t_travelitem
+        WHERE id in (SELECT travelitem_id FROM t_travelgroup_travelitem where travelgroup_id  = #{id});
+    </select>
+
 
 
 </mapper>

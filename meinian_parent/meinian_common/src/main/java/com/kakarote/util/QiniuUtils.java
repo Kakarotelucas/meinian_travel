@@ -9,7 +9,7 @@ import com.qiniu.storage.Configuration;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
-import org.junit.Test;
+
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -26,7 +26,7 @@ public class QiniuUtils {
 
     public  static String accessKey = "P3qjwKkJYIE_k602Vuor0CP8UEPjU-wrK4yqkLil";
     public  static String secretKey = "_GEXLQM7UufsIl4XaMA9CdZlN3SbJJsm0toM7LDk";
-    public  static String bucket = "kakarote";
+    public  static String bucket = "com.kakarote";
 
     public static void upload2Qiniu(String filePath,String fileName){
         //构造一个带指定Zone对象的配置类

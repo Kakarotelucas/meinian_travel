@@ -30,5 +30,49 @@
         </where>
     </select>
 
+    <!--移动端查询所有套餐
+    List<Setmeal> findAll();
+    -->
+    <select id="findAll" resultType="setmeal">
+        select * from t_setmeal
+    </select>
+
+    <!--根据id查询套餐信息(还要显示跟团游、自由行)
+    Setmeal findById(int id);
+    这里不再使用 resultType 而是用 resultMap
+    在根据id查询套餐时，同时将此套餐包含的跟团游都查询出来，并且将跟团游包含的自由行都查询出来。
+    <select id="findById" parameterType="int" resultType="Setmeal"></select>
+    -->
+
+    <!--查询Setmeal类基本属性-->
+    <resultMap id="setmealResultMap" type="setmeal">
+        <!-- id用于映射主键 -->
+        <!-- 非主键使用result映射 -->
+        <id property="id" column="id"></id>
+        <result property="name" column="name"></result>
+        <result property="code" column="code"></result>
+        <result property="helpCode" column="helpCode"></result>
+        <result property="sex" column="sex"></result>
+        <result property="age" column="age"></result>
+        <result property="price" column="price"></result>
+        <result property="remark" column="remark"></result>
+        <result property="attention" column="attention"></result>
+        <result property="img" column="img"></result>
+
+        <!--关联集合属性，借助关联数据接口帮助进行数据封装.查询 private List<TravelGroup> travelGroups;旅行套餐对应的报团分组，多对多关系
+        Property表示实体类中的集合属性.select表示另一个方法路径：需要在TravelGroupDao接口创建相对应的方法:根据套餐id查出跟团游-->
+        <collection property="travelGroups" column="id"
+                    select="com.kakarote.dao.TravelGroupDao.findTravelGroupListById">
+        </collection>
+
+    </resultMap>
+    <select id="findById" parameterType="int" resultMap="setmealResultMap" >
+        select * from t_setmeal where id=#{id}
+    </select>
+
+    <!--只查询单个套餐对象-->
+    <select id="getSetmealById" parameterType="int" resultType="setmeal">
+        select * from t_setmeal where id = #{id}
+    </select>
 
 </mapper>
