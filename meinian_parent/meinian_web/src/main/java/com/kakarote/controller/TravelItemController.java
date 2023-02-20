@@ -6,6 +6,7 @@ import com.kakarote.results.QueryPageBean;
 import com.kakarote.results.Result;
 import com.kakarote.pojo.TravelItem;
 import com.kakarote.service.TravelItemService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,6 +30,7 @@ public class TravelItemController {
      * @return
      */
     @RequestMapping("add")
+    @PreAuthorize("hasAuthority('TRAVELITEM_ADD')")//权限校验
     //@RequestBody从请求体中取前端数据。formDate表单项参数名称与实体类对象属性名称要保持一致才可以封装
     public Result add(@RequestBody TravelItem travelItem){
 
@@ -46,6 +48,7 @@ public class TravelItemController {
      * @return 返回分页对象
      */
     @RequestMapping("/findPage")
+    @PreAuthorize("hasAuthority('TRAVELITEM_QUERY')")//权限校验
     public PageResult findPage(@RequestBody QueryPageBean queryPageBean){
         PageResult pageResult = travelItemService.findPage(
                 queryPageBean.getCurrentPage(),
@@ -60,6 +63,7 @@ public class TravelItemController {
      * @param id
      * @return
      */
+    @PreAuthorize("hasAuthority('TRAVELITEM_DELETE')")//权限校验，使用TRAVELITEM_DELETE123测试
     @RequestMapping("/delete")
     public Result delete(Integer id){ //可以使用 RequestParam("id")接收
         try {
@@ -98,6 +102,7 @@ public class TravelItemController {
      * @return
      */
     @RequestMapping("/edit")
+    @PreAuthorize("hasAuthority('TRAVELITEM_EDIT')")//权限校验
     public Result edit(@RequestBody TravelItem travelItem){
         travelItemService.edit(travelItem);
         return new Result(true,MessageConstant.EDIT_TRAVELITEM_SUCCESS);
@@ -112,6 +117,5 @@ public class TravelItemController {
         List<TravelItem> lists =  travelItemService.findAll();
         return new Result(true, MessageConstant.QUERY_TRAVELGROUP_SUCCESS,lists);
     }
-
 
 }

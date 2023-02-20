@@ -24,7 +24,6 @@ public class TravelGroupController {
     @Reference
     TravelGroupService travelGroupService;
 
-
     /**
      * 新增跟团游
      * @return
