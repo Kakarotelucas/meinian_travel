@@ -8,6 +8,9 @@ import com.kakarote.util.MD5Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @Date: 2023/2/16 17:40
  * @Auther: Kakarotelu
@@ -26,6 +29,7 @@ public class MemberServiceImpl implements MemberService {
         return memberDao.getMemberByTelephone(telephone);
     }
 
+    //新增会员
     @Override
     public void add(Member member) {
         //MD5加密
@@ -34,4 +38,21 @@ public class MemberServiceImpl implements MemberService {
         }
         memberDao.add(member);
     }
+
+
+    //根据月份查询所有的会员数量
+    @Override
+    public List<Integer> findMemberCountByMonth(List<String> months) {
+        List<Integer> list = new ArrayList<>();
+        if(months != null && months.size() > 0){
+            for (String month : months) {
+                // 迭代过去12个月，每个月注册会员的数量，根据注册日期查询
+                int count = memberDao.findMemberCountByMonth(month);
+                list.add(count);
+            }
+        }
+        return list;
+    }
+
+
 }

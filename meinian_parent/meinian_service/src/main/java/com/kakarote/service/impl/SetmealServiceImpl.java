@@ -107,4 +107,13 @@ public class SetmealServiceImpl implements SetmealService {
     public Setmeal getSetmealById(int id) {
         return setmealDao.getSetmealById(id);
     }
+
+    /**
+     * 统计套餐预约人数占比（饼图）
+     * @return
+     */
+    @Override
+    public List<Map<String, Object>> findSetmealCount() {
+        return setmealDao.findSetmealCount();
+    }
 }

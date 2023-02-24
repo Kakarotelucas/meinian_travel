@@ -3,6 +3,7 @@ package com.kakarote.service;
 import com.kakarote.pojo.Setmeal;
 import com.kakarote.results.PageResult;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -26,5 +27,8 @@ public interface SetmealService {
 
     //只查询单个套餐对象
     Setmeal getSetmealById(int id);
+
+    //统计套餐预约人数占比（饼图）
+    List<Map<String, Object>> findSetmealCount();
 }
 

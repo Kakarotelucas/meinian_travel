@@ -18,4 +18,35 @@
         insert into t_member(fileNumber, name, sex, idCard, phoneNumber, regTime, password, email, birthday, remark)
         values (#{fileNumber}, #{name}, #{sex}, #{idCard}, #{phoneNumber}, #{regTime}, #{password}, #{email}, #{birthday}, #{remark})
     </insert>
+
+    <!--
+    //查询所有的会员数量
+    int findMemberCountByMonth(String month);
+    注意：在xml文件中，
+            <号需要转义”&lt;”
+			>号需要转义”&gt;”
+			&号需要专业 ”&amp;”
+
+    -->
+    <select id="findMemberCountByMonth" parameterType="string" resultType="Integer">
+        select count(*) from t_member where regTime &lt;= #{month}
+    </select>
+
+
+    <!--今日新增会员数-->
+    <select id="getTodayNewMember" parameterType="string" resultType="int">
+        SELECT COUNT(id) FROM t_member WHERE regTime = #{date}
+    </select>
+
+    <!--总会员数-->
+    <select id="getTotalMember" resultType="int">
+        SELECT COUNT(id) FROM t_member
+    </select>
+
+    <!--本周/本月新增会员数-->
+    <select id="getThisWeekAndMonthNewMember" parameterType="string" resultType="int">
+        SELECT COUNT(id) FROM t_member WHERE regTime &gt;= #{date}
+    </select>
+
+
 </mapper>

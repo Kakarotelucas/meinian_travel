@@ -20,4 +20,20 @@ public interface OrderDao {
 
     //根据订单id查询预约信息，包括旅游人信息、套餐信息
     Map findById4Detail(Integer id);
+
+    // （5）今日预约数
+    int getTodayOrderNumber(String date);
+
+    // （6）今日出游数
+    int getTodayVisitsNumber(String date);
+
+    // （7）本周预约数
+    int getThisWeekAndMonthOrderNumber(Map<String, Object> map);
+
+    // （9）本月预约数
+    int getThisWeekAndMonthVisitsNumber(Map<String, Object> map);
+
+    // （11）热门套餐
+    List<Map<String,Object>> findHotSetmeal();
+
 }
